@@ -35,12 +35,12 @@ library UniswapV2Library {
     function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
         // origin  96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f
-        // new 60273f1554c10a831324ccabe5ffe7638974de9341202a825a002fc6407d682b
+        // new b2be9653367392fe0f133bf57885e8b7fc771a09a8c067d595700165250f0f8a
         pair = address(uint(keccak256(abi.encodePacked(
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'60273f1554c10a831324ccabe5ffe7638974de9341202a825a002fc6407d682b' // init code hash
+                hex'b2be9653367392fe0f133bf57885e8b7fc771a09a8c067d595700165250f0f8a' // init code hash
             ))));
         // Conflux Contract Address 0x8xxxx
         pair = wrapperAddress(pair);
