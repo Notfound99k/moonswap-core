@@ -1519,7 +1519,7 @@
                                   "name": "this",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 8341,
+                                  "referencedDeclaration": 8339,
                                   "src": "1504:4:5",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_contract$_UniswapV2ERC20_$1797",
@@ -7795,7 +7795,7 @@
                                   "name": "this",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 8341,
+                                  "referencedDeclaration": 8339,
                                   "src": "1504:4:5",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_contract$_UniswapV2ERC20_$1797",
@@ -12924,7 +12924,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-09-18T13:44:29.354Z",
+  "updatedAt": "2020-09-18T20:50:07.699Z",
   "devdoc": {
     "methods": {}
   },
