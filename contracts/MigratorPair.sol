@@ -16,6 +16,7 @@ interface IMigratorFactory {
     function cMoonLpToken(address pair) external view returns (address);
     function getInflationPair(address pair) external view returns (uint);
     function getPause() external view returns (bool);
+    function confluxStar() external view returns (address);
 }
 
 interface IUniswapV2Factory{
@@ -25,6 +26,12 @@ interface IUniswapV2Factory{
 interface IUniswapV2Pair {
   function mint(address to) external returns (uint liquidity);
   function transfer(address to, uint value) external returns (bool);
+  function approve(address spender, uint value) external returns (bool);
+}
+
+interface IConfluxStar {
+  function deposit(uint256 _pid, uint256 _amount, address to) external;
+  function poolIndexs(address lpToken) external returns(uint256);
 }
 
 contract MigratorPair is IERC777Recipient {
@@ -88,13 +95,25 @@ contract MigratorPair is IERC777Recipient {
 
   function _exchangeLp(address from, uint amount) internal {
       address swapFactory = IMigratorFactory(factory).swapFactory();
+      address confluxStar = IMigratorFactory(factory).confluxStar();
       address swapPair = IUniswapV2Factory(swapFactory).getPair(token0, token1);
       require(swapPair != address(0), "MoonSwap: no swap pair");
       uint _multiplier = IMigratorFactory(factory).getInflationPair(address(this));
       require(_multiplier > 0, "Moonswap: multiplier is zero");
       amount = amount.mul(_multiplier); // diff decimals Inflation Amount
 
-      IUniswapV2Pair(swapPair).transfer(from, amount);
+      if(confluxStar != address(0)){
+        IUniswapV2Pair(swapPair).approve(confluxStar, amount);
+        uint256 _pIndex = IConfluxStar(confluxStar).poolIndexs(swapPair);
+        if(_pIndex > 0){
+            IConfluxStar(confluxStar).deposit(_pIndex.sub(1), amount, from);
+        }else{
+            IUniswapV2Pair(swapPair).transfer(from, amount);
+        }
+
+      }else{
+        IUniswapV2Pair(swapPair).transfer(from, amount);
+      }
       userExchangeAmount[from] = userExchangeAmount[from].add(amount);
       emit ExchangeLpToken(swapPair, from, amount);
   }

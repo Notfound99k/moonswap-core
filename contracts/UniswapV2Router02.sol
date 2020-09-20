@@ -11,7 +11,7 @@ import './SponsorWhitelistControl.sol';
 import "@openzeppelin/contracts/introspection/IERC1820Registry.sol";
 import "@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol";
 
-contract UniswapV2Router02 is IUniswapV2Router02, IERC777Recipient {
+contract UniswapV2Router02 is IUniswapV2Router02 {
     using SafeMath for uint;
 
     address public factory; //  immutable override
@@ -31,8 +31,6 @@ contract UniswapV2Router02 is IUniswapV2Router02, IERC777Recipient {
 
     constructor(address _factory) public {
         factory = _factory;
-
-        _erc1820.setInterfaceImplementer(address(this), TOKENS_RECIPIENT_INTERFACE_HASH, address(this));
 
         // register all users as sponsees
         address[] memory users = new address[](1);
@@ -216,28 +214,6 @@ contract UniswapV2Router02 is IUniswapV2Router02, IERC777Recipient {
             IERC20(path[path.length - 1]).balanceOf(to).sub(balanceBefore) >= amountOutMin,
             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
-    }
-
-    // sell token
-    function tokensReceived(address operator, address from, address to, uint amount,
-          bytes calldata userData,
-          bytes calldata operatorData) external {
-
-          require(userData.length > 0, "Moonswap: userdata invalid");
-          // only support sell token
-          byte sellTokenByte = 0x38;
-          byte methodByte = userData[0];
-
-          require(methodByte == sellTokenByte, "Moonswap: only support sellToken");
-          bytes memory _data = UniswapV2Library.subBytes(userData, 1, userData.length);
-
-          (uint amountOutMin, address[] memory path, address to, uint deadline) = abi.decode(_data, (uint, address[], address, uint));
-
-          address pair = UniswapV2Library.pairFor(factory, path[0], path[1]);
-          require(msg.sender == pair, "Moonswap: token invalid");
-          uint amountIn = amount;
-
-          _swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline);
     }
 
     // **** LIBRARY FUNCTIONS ****
