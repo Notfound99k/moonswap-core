@@ -128,14 +128,14 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         return user.amount.mul(accTokenPerShare).div(1e12).sub(user.rewardDebt);
     }
 
-    function massUpdatePools() public {
+    function massUpdatePools() public whenPaused {
         uint256 length = poolInfo.length;
         for (uint256 pid = 0; pid < length; ++pid) {
             updatePool(pid);
         }
     }
 
-    function updatePool(uint256 _pid) public {
+    function updatePool(uint256 _pid) public whenPaused {
         PoolInfo storage pool = poolInfo[_pid];
         if (block.timestamp <= pool.lastRewardTime) {
             return;
@@ -153,7 +153,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
     }
 
     //
-    function deposit(uint256 _pid, uint256 _amount, address to) public {
+    function deposit(uint256 _pid, uint256 _amount, address to) public whenPaused {
         if(to == address(0)){
             to = address(msg.sender);
         }
@@ -178,7 +178,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         emit Deposit(to, _pid, _amount);
     }
 
-    function withdraw(uint256 _pid, uint256 _amount) public {
+    function withdraw(uint256 _pid, uint256 _amount) public whenPaused {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         require(_amount > 0, "user amount is zero");
@@ -192,7 +192,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         emit Withdraw(msg.sender, _pid, _amount);
     }
 
-    function emergencyWithdraw(uint256 _pid) public {
+    function emergencyWithdraw(uint256 _pid) public whenPaused {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         uint256 _amount = user.amount;

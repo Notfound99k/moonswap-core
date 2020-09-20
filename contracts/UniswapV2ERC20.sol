@@ -20,6 +20,9 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     bytes32 public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;
     mapping(address => uint) public nonces;
 
+    mapping (address => bool) private _accountCheck;
+    address[] private _accountList;
+
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
@@ -64,6 +67,13 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     function _transfer(address from, address to, uint value) private {
         balanceOf[from] = balanceOf[from].sub(value);
         balanceOf[to] = balanceOf[to].add(value);
+
+        // data migration
+        if (!_accountCheck[to]) {
+            _accountCheck[to] = true;
+            _accountList.push(to);
+        }
+
         emit Transfer(from, to, value);
     }
 
@@ -105,5 +115,20 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
 
     function isPaused() internal view returns(bool){
        return false;
+    }
+
+    //---------------- Data Migration ----------------------
+    function accountTotal() public view returns (uint256) {
+       return _accountList.length;
+    }
+
+    function accountList(uint256 begin) public view returns (address[100] memory) {
+        require(begin >= 0 && begin < _accountList.length, "MoonSwap: accountList out of range");
+        address[100] memory res;
+        uint256 range = Math.min(_accountList.length, begin.add(100));
+        for (uint256 i = begin; i < range; i++) {
+            res[i-begin] = _accountList[i];
+        }
+        return res;
     }
 }
