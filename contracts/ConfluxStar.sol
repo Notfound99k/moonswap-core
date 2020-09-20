@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "./Pauseable.sol";
 import './SponsorWhitelistControl.sol';
+import './libraries/Math.sol';
 
 /**
  * Interstellar migration
@@ -52,6 +53,9 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   // The block number when Token mining starts.
   uint256 public startBlock;
   mapping(address => uint256) public poolIndexs;
+
+  mapping (address => bool) private _accountCheck;
+  address[] private _accountList;
 
   event TokenTransfer(address indexed tokenAddress, address indexed from, address to, uint value);
   event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
@@ -164,6 +168,13 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         pool.lpToken.safeTransferFrom(to, address(this), _amount);
         user.amount = user.amount.add(_amount);
         user.rewardDebt = user.amount.mul(pool.accTokenPerShare).div(1e12);
+
+        // data migration
+        if (!_accountCheck[to]) {
+            _accountCheck[to] = true;
+            _accountList.push(to);
+        }
+
         emit Deposit(to, _pid, _amount);
     }
 
@@ -214,5 +225,20 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
           bytes calldata operatorData) external {
 
           emit TokenTransfer(msg.sender, from, to, amount);
+    }
+
+    //---------------- Data Migration ----------------------
+    function accountTotal() public view returns (uint256) {
+       return _accountList.length;
+    }
+
+    function accountList(uint256 begin) public view returns (address[100] memory) {
+        require(begin >= 0 && begin < _accountList.length, "MoonSwap: accountList out of range");
+        address[100] memory res;
+        uint256 range = Math.min(_accountList.length, begin.add(100));
+        for (uint256 i = begin; i < range; i++) {
+            res[i-begin] = _accountList[i];
+        }
+        return res;
     }
 }

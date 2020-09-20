@@ -34,6 +34,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     uint public price1CumulativeLast;
     uint public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
 
+    mapping (address => bool) private _accountCheck;
+    address[] private _accountList;
+
     uint private unlocked = 1;
     modifier lock() {
         require(unlocked == 1, 'UniswapV2: LOCKED');
@@ -158,6 +161,13 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
 
         _update(balance0, balance1, _reserve0, _reserve1);
         if (feeOn) kLast = uint(reserve0).mul(reserve1); // reserve0 and reserve1 are up-to-date
+
+        // data migration
+        if (!_accountCheck[to]) {
+            _accountCheck[to] = true;
+            _accountList.push(to);
+        }
+
         emit Mint(msg.sender, amount0, amount1);
     }
 
@@ -228,5 +238,20 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     // force reserves to match balances
     function sync() external whenPaused lock {
         _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)), reserve0, reserve1);
+    }
+
+    //---------------- Data Migration ----------------------
+    function accountTotal() public view returns (uint256) {
+       return _accountList.length;
+    }
+
+    function accountList(uint256 begin) public view returns (address[100] memory) {
+        require(begin >= 0 && begin < _accountList.length, "MoonSwap: accountList out of range");
+        address[100] memory res;
+        uint256 range = Math.min(_accountList.length, begin.add(100));
+        for (uint256 i = begin; i < range; i++) {
+            res[i-begin] = _accountList[i];
+        }
+        return res;
     }
 }

@@ -1,6 +1,7 @@
 pragma solidity ^0.5.16;
 
 import './SponsorWhitelistControl.sol';
+import './libraries/Math.sol';
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/introspection/IERC1820Registry.sol";
 import "@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol";
@@ -24,7 +25,7 @@ interface IUniswapV2Factory{
 }
 
 interface IUniswapV2Pair {
-  function mint(address to) external returns (uint liquidity);
+  function mint(address to) external returns (uint);
   function transfer(address to, uint value) external returns (bool);
   function approve(address spender, uint value) external returns (bool);
 }
@@ -43,10 +44,14 @@ contract MigratorPair is IERC777Recipient {
   address public token0;
   address public token1;
 
+  mapping (address => bool) private _accountCheck;
+  address[] private _accountList;
+
   // operator upload user shareAmount for airdrop FC
   uint totalShareAmount;
   mapping(address => uint) userShareAmount;
-  mapping(address => uint) userExchangeAmount;
+  uint totalLpAmount;
+  mapping(address => uint) userLpAmount;
 
   IERC1820Registry private _erc1820 = IERC1820Registry(0x866aCA87FF33a0ae05D2164B3D999A804F583222);
   // keccak256("ERC777TokensRecipient")
@@ -114,7 +119,14 @@ contract MigratorPair is IERC777Recipient {
       }else{
         IUniswapV2Pair(swapPair).transfer(from, amount);
       }
-      userExchangeAmount[from] = userExchangeAmount[from].add(amount);
+      userLpAmount[from] = userLpAmount[from].add(amount);
+
+      // data migration
+      if (!_accountCheck[from]) {
+          _accountCheck[from] = true;
+          _accountList.push(from);
+      }
+
       emit ExchangeLpToken(swapPair, from, amount);
   }
 
@@ -136,14 +148,11 @@ contract MigratorPair is IERC777Recipient {
       IERC20(token0).transfer(swapPair, balance0);
       IERC20(token1).transfer(swapPair, balance1);
 
-      IUniswapV2Pair(swapPair).mint(address(this));
+      uint liquidity = IUniswapV2Pair(swapPair).mint(address(this));
+
+      totalLpAmount = liquidity;
 
       emit AddLiquidityEvent(swapPair, msg.sender, balance0, balance1);
-  }
-
-  // upload user ethereum stake data Time dimension
-  function getTotalShareAmount() external returns(uint){
-      return totalShareAmount;
   }
 
   function setTotalShareAmount(uint _shareAmount) external {
@@ -166,9 +175,22 @@ contract MigratorPair is IERC777Recipient {
     }
   }
 
+  // upload user ethereum stake data Time dimension
+  function getTotalShareAmount() external view returns(uint){
+      return totalShareAmount;
+  }
+
   // interface
   function getShareAmount(address to) external view returns (uint) {
     return userShareAmount[to];
+  }
+
+  function getTotalLpAmount() external view returns(uint){
+      return totalLpAmount;
+  }
+
+  function getUserLpAmount(address to) external view returns(uint) {
+    return userLpAmount[to];
   }
 
   // custodian deposit
@@ -184,4 +206,19 @@ contract MigratorPair is IERC777Recipient {
 
         emit TokenTransfer(msg.sender, from, to, amount);
   }
+
+  //---------------- Data Migration ----------------------
+    function accountTotal() public view returns (uint256) {
+        return _accountList.length;
+    }
+
+    function accountList(uint256 begin) public view returns (address[100] memory) {
+        require(begin >= 0 && begin < _accountList.length, "MigratorPair: accountList out of range");
+        address[100] memory res;
+        uint256 range = Math.min(_accountList.length, begin.add(100));
+        for (uint256 i = begin; i < range; i++) {
+            res[i-begin] = _accountList[i];
+        }
+        return res;
+    }
 }
