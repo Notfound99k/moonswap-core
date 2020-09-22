@@ -22,6 +22,7 @@ contract MigratorFactory is Pauseable {
     address public swapFactory;
     mapping(address => uint) public desiredLiquidity;
     mapping(address => uint) public getInflationPair; // Lp Decimals diff
+    address public confluxStar;
 
     event PairCreated(address indexed token0, address indexed token1, address pair, uint);
 
@@ -68,6 +69,11 @@ contract MigratorFactory is Pauseable {
     function setSwapFactory(address _swapFactory) external {
         require(msg.sender == operatorAddr, "MoonSwap: FORBIDDEN");
         swapFactory = _swapFactory;
+    }
+
+    function setConfluxStar(address _confluxStar) external {
+        require(msg.sender == operatorAddr, "MoonSwap: FORBIDDEN");
+        confluxStar = _confluxStar;
     }
 
     function setOperatorAddr(address _operatorAddr) external {

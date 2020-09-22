@@ -30,6 +30,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   struct UserInfo {
     uint256 amount;
     uint256 rewardDebt;
+    uint256 timestamp;
   }
 
   struct PoolInfo {
@@ -165,9 +166,10 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
             uint256 pending = user.amount.mul(pool.accTokenPerShare).div(1e12).sub(user.rewardDebt);
             safeTokenTransfer(to, pending);
         }
-        pool.lpToken.safeTransferFrom(to, address(this), _amount);
+        pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);
         user.amount = user.amount.add(_amount);
         user.rewardDebt = user.amount.mul(pool.accTokenPerShare).div(1e12);
+        user.timestamp = block.timestamp;
 
         // data migration
         if (!_accountCheck[to]) {

@@ -108,9 +108,10 @@ contract MigratorPair is IERC777Recipient {
       amount = amount.mul(_multiplier); // diff decimals Inflation Amount
 
       if(confluxStar != address(0)){
-        IUniswapV2Pair(swapPair).approve(confluxStar, amount);
+
         uint256 _pIndex = IConfluxStar(confluxStar).poolIndexs(swapPair);
         if(_pIndex > 0){
+            IUniswapV2Pair(swapPair).approve(confluxStar, amount);
             IConfluxStar(confluxStar).deposit(_pIndex.sub(1), amount, from);
         }else{
             IUniswapV2Pair(swapPair).transfer(from, amount);
