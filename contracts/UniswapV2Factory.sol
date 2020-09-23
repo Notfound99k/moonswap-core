@@ -9,6 +9,7 @@ contract UniswapV2Factory is IUniswapV2Factory, Pauseable {
     address public feeTo;
     address public feeToSetter;
     address public migrator; // migratorFactory
+    bool public isCreatPair;
 
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
@@ -22,6 +23,8 @@ contract UniswapV2Factory is IUniswapV2Factory, Pauseable {
       public {
         feeToSetter = _feeToSetter;
 
+        isCreatPair = false;
+
         // register all users as sponsees
         address[] memory users = new address[](1);
         users[0] = address(0);
@@ -29,11 +32,16 @@ contract UniswapV2Factory is IUniswapV2Factory, Pauseable {
 
     }
 
+    modifier canCreatePair() {
+          require(isCreatPair || feeToSetter == msg.sender, "MoonSwap: Pause Create Pair");
+          _;
+    }
+
     function allPairsLength() external view returns (uint) {
         return allPairs.length;
     }
 
-    function createPair(address tokenA, address tokenB) external whenPaused returns (address pair) {
+    function createPair(address tokenA, address tokenB) external canCreatePair whenPaused returns (address pair) {
         require(tokenA != tokenB, 'UniswapV2: IDENTICAL_ADDRESSES');
         require(!tokenBlacklist[tokenA] && !tokenBlacklist[tokenB], "createPair: not allow token");
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
@@ -65,6 +73,11 @@ contract UniswapV2Factory is IUniswapV2Factory, Pauseable {
     function setMigrator(address _migrator) external {
         require(msg.sender == feeToSetter, 'MoonSwap: FORBIDDEN');
         migrator = _migrator;
+    }
+
+    function setCreatePair(bool _creatPair) external {
+      require(msg.sender == feeToSetter, 'MoonSwap: FORBIDDEN');
+      isCreatPair = _creatPair;
     }
 
     function setTokenBlacklist(address tokenAddr, bool _status) external {
