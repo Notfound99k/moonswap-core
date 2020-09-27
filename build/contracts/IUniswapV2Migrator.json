@@ -48,14 +48,14 @@
     "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-amm/contracts/interfaces/IUniswapV2Migrator.sol",
     "exportedSymbols": {
       "IUniswapV2Migrator": [
-        6126
+        6317
       ]
     },
-    "id": 6127,
+    "id": 6318,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6112,
+        "id": 6303,
         "literals": [
           "solidity",
           "=",
@@ -71,9 +71,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6126,
+        "id": 6317,
         "linearizedBaseContracts": [
-          6126
+          6317
         ],
         "name": "IUniswapV2Migrator",
         "nodeType": "ContractDefinition",
@@ -81,22 +81,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 6125,
+            "id": 6316,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "migrate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6123,
+              "id": 6314,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6114,
+                  "id": 6305,
                   "name": "token",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "78:13:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -105,7 +105,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6113,
+                    "id": 6304,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "78:7:15",
@@ -120,10 +120,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6116,
+                  "id": 6307,
                   "name": "amountTokenMin",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "93:19:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -132,7 +132,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6115,
+                    "id": 6306,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "93:4:15",
@@ -146,10 +146,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6118,
+                  "id": 6309,
                   "name": "amountETHMin",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "114:17:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -158,7 +158,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6117,
+                    "id": 6308,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "114:4:15",
@@ -172,10 +172,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6120,
+                  "id": 6311,
                   "name": "to",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "133:10:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -184,7 +184,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6119,
+                    "id": 6310,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "133:7:15",
@@ -199,10 +199,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6122,
+                  "id": 6313,
                   "name": "deadline",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "145:13:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -211,7 +211,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6121,
+                    "id": 6312,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "145:4:15",
@@ -227,19 +227,19 @@
               "src": "77:82:15"
             },
             "returnParameters": {
-              "id": 6124,
+              "id": 6315,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "168:0:15"
             },
-            "scope": 6126,
+            "scope": 6317,
             "src": "61:108:15",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 6127,
+        "scope": 6318,
         "src": "26:145:15"
       }
     ],
@@ -249,14 +249,14 @@
     "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-amm/contracts/interfaces/IUniswapV2Migrator.sol",
     "exportedSymbols": {
       "IUniswapV2Migrator": [
-        6126
+        6317
       ]
     },
-    "id": 6127,
+    "id": 6318,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6112,
+        "id": 6303,
         "literals": [
           "solidity",
           "=",
@@ -272,9 +272,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6126,
+        "id": 6317,
         "linearizedBaseContracts": [
-          6126
+          6317
         ],
         "name": "IUniswapV2Migrator",
         "nodeType": "ContractDefinition",
@@ -282,22 +282,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 6125,
+            "id": 6316,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "migrate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6123,
+              "id": 6314,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6114,
+                  "id": 6305,
                   "name": "token",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "78:13:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -306,7 +306,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6113,
+                    "id": 6304,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "78:7:15",
@@ -321,10 +321,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6116,
+                  "id": 6307,
                   "name": "amountTokenMin",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "93:19:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -333,7 +333,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6115,
+                    "id": 6306,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "93:4:15",
@@ -347,10 +347,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6118,
+                  "id": 6309,
                   "name": "amountETHMin",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "114:17:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -359,7 +359,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6117,
+                    "id": 6308,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "114:4:15",
@@ -373,10 +373,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6120,
+                  "id": 6311,
                   "name": "to",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "133:10:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -385,7 +385,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6119,
+                    "id": 6310,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "133:7:15",
@@ -400,10 +400,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 6122,
+                  "id": 6313,
                   "name": "deadline",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6125,
+                  "scope": 6316,
                   "src": "145:13:15",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -412,7 +412,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 6121,
+                    "id": 6312,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "145:4:15",
@@ -428,19 +428,19 @@
               "src": "77:82:15"
             },
             "returnParameters": {
-              "id": 6124,
+              "id": 6315,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "168:0:15"
             },
-            "scope": 6126,
+            "scope": 6317,
             "src": "61:108:15",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 6127,
+        "scope": 6318,
         "src": "26:145:15"
       }
     ],
@@ -452,7 +452,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-09-22T01:27:21.981Z",
+  "updatedAt": "2020-09-25T14:49:54.440Z",
   "devdoc": {
     "methods": {}
   },

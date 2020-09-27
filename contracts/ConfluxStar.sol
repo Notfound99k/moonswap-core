@@ -36,7 +36,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   struct PoolInfo {
     IERC20 lpToken;           // Address of LP token contract.
     uint256 allocPoint;       // How many allocation points assigned to this pool. Moons to distribute per block.
-    uint256 lastRewardTime;  //
+    uint256 lastRewardBlock;  //
     uint256 accTokenPerShare; //
   }
 
@@ -44,6 +44,7 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   address public cMoonToken;
   uint256 public tokenPerSecond;
   uint256 public startFarmTime;
+  uint256 public startFarmBlock;
 
   // Info of each pool.
   PoolInfo[] public poolInfo;
@@ -66,11 +67,11 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   constructor(
         address _cMoon,
         uint256 _tokenPerSecond,
-        uint256 _startTime
+        uint256 _startBlock
     ) public {
         cMoonToken = _cMoon;
         tokenPerSecond = _tokenPerSecond; // Calculate the production rate according to the mining situation
-        startFarmTime = _startTime;
+        startFarmBlock = _startBlock;
 
 
         _erc1820.setInterfaceImplementer(address(this), TOKENS_RECIPIENT_INTERFACE_HASH, address(this));
@@ -90,12 +91,12 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
             massUpdatePools();
         }
         require(poolIndexs[address(_lpToken)] < 1, "LpToken exists");
-        uint256 lastRewardTime = block.timestamp > startFarmTime ? block.timestamp : startFarmTime;
+        uint256 lastRewardBlock = block.number > startFarmBlock ? block.number : startFarmBlock;
         totalAllocPoint = totalAllocPoint.add(_allocPoint);
         poolInfo.push(PoolInfo({
             lpToken: _lpToken,
             allocPoint: _allocPoint,
-            lastRewardTime: lastRewardTime,
+            lastRewardBlock: lastRewardBlock,
             accTokenPerShare: 0
         }));
 
@@ -116,13 +117,29 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         tokenPerSecond = _tokenPerSecond;
     }
 
+    // only first est time execute the action
+    function setStartFarmBlock(uint256 _startBlock) public onlyOwner {
+        uint256 length = poolInfo.length;
+        require(_startBlock > block.number, "ConfluxStar: startBlock error");
+        startFarmBlock = _startBlock;
+        for (uint256 pid = 0; pid < length; ++pid) {
+            _updatePoolParam(pid);
+        }
+    }
+
+    function _updatePoolParam(uint256 _pid) internal {
+        PoolInfo storage pool = poolInfo[_pid];
+        pool.lastRewardBlock = startFarmBlock;
+    }
+
+
     function pendingToken(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
         uint256 accTokenPerShare = pool.accTokenPerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
-        if (block.timestamp > pool.lastRewardTime && lpSupply != 0) {
-            uint256 tokenReward = _getPoolReward(pool.lastRewardTime);
+        if (block.number > pool.lastRewardBlock && lpSupply != 0) {
+            uint256 tokenReward = _getPoolReward(pool.lastRewardBlock, pool.allocPoint);
             accTokenPerShare = accTokenPerShare.add(tokenReward.mul(1e12).div(lpSupply));
         }
 
@@ -136,21 +153,23 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         }
     }
 
+
+
     function updatePool(uint256 _pid) public whenPaused {
         PoolInfo storage pool = poolInfo[_pid];
-        if (block.timestamp <= pool.lastRewardTime) {
+        if (block.number <= pool.lastRewardBlock) {
             return;
         }
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (lpSupply == 0) {
-            pool.lastRewardTime = block.timestamp;
+            pool.lastRewardBlock = block.number;
             return;
         }
 
-        uint256 tokenReward = _getPoolReward(pool.lastRewardTime);
+        uint256 tokenReward = _getPoolReward(pool.lastRewardBlock, pool.allocPoint);
 
         pool.accTokenPerShare = pool.accTokenPerShare.add(tokenReward.mul(1e12).div(lpSupply));
-        pool.lastRewardTime = block.timestamp;
+        pool.lastRewardBlock = block.number;
     }
 
     //
@@ -216,9 +235,9 @@ contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
         IERC20(cMoonToken).transfer(_to, _amount);
     }
 
-    function _getPoolReward(uint256 _poolLastRewardTime) internal view returns(uint256) {
-        uint256 _timestamp = block.timestamp;
-        return _timestamp.sub(_poolLastRewardTime).mul(tokenPerSecond);
+    function _getPoolReward(uint256 _poolLastRewardBlock, uint256 _poolAllocPoint) internal view returns(uint256) {
+        return block.number.sub(_poolLastRewardBlock).div(2).mul(tokenPerSecond)
+          .mul(_poolAllocPoint).div(totalAllocPoint);
     }
 
     // custodian deposit
