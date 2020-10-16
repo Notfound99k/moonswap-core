@@ -235,8 +235,14 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
 
         uint256 _posIndex = userConfiIndexes[msg.sender][_id];
         require(_id == userStakeConfi[msg.sender][_catId][_posIndex - 1], "ConfiSale: invalid TokenId");
-        userStakeConfi[msg.sender][_catId][_posIndex - 1] = userStakeConfi[msg.sender][_catId][_stakeCount - 1];
-        delete userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+        if(_posIndex == _stakeCount){
+          delete userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+        }else{
+          userStakeConfi[msg.sender][_catId][_posIndex - 1] = userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+          delete userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+          userConfiIndexes[msg.sender][userStakeConfi[msg.sender][_catId][_posIndex - 1]] = _posIndex;
+        }
+
         _safeNFTTransfer(msg.sender, _id);
 
         emit TokenUnStake(address(this), msg.sender, _id);
