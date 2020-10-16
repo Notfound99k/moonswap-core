@@ -72,7 +72,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     uint256 public devBalance;
     address public devAddr;
     uint256 public rewardRatio;
-    uint256 public apyRatio; // 0.01%
+    uint256 public apyRatio; // div 10000
     bool public outEnable; // game end open harvest
     bool public stakeEnable; // game stake enable
 
@@ -333,14 +333,12 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
 
     function harvest() external whenPaused {
       UserInfo storage user = userInfo[msg.sender];
-      require(user.weight > 0, "ConfiSale: weight is zero");
       require(outEnable, "confiSale: outEnable is closed");
       _poolLogic();
       uint256 pending = user.weight.mul(accTokenPerShare).div(1e12).sub(user.rewardDebt);
       pending = user.balance.add(pending);
       user.rewardDebt = user.weight.mul(accTokenPerShare).div(1e12);
       user.balance = 0;
-      poolBalance = poolBalance.sub(pending);
       if(pending > 0){
         _safeTokenTransfer(msg.sender, pending);
       }
