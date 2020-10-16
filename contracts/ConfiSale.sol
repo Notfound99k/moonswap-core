@@ -46,6 +46,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     // from 1 start
     mapping(address => mapping(uint256 => uint256)) userConfiIndexes;
     mapping(uint256 => uint256) public confiCategories; // tokenId => catId
+    mapping(address => uint256) public userLatestBuy;
 
     mapping(address => UserInfo) public userInfo;
     // calc reward
@@ -214,6 +215,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
       _poolAssign(_amount);
       _safeNFTTransfer(_from, _tokenId);
 
+      userLatestBuy[_from] = _tokenId;
       emit TokenBuy(address(this), _from, _tokenId, _amount);
     }
 
