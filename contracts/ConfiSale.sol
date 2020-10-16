@@ -45,7 +45,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     mapping(address => mapping(uint256 => uint256[])) public userStakeConfi;
     // from 1 start
     mapping(address => mapping(uint256 => uint256)) userConfiIndexes;
-    mapping(uint256 => uint256) public confiCategories;
+    mapping(uint256 => uint256) public confiCategories; // tokenId => catId
 
     mapping(address => UserInfo) public userInfo;
     // calc reward
@@ -73,6 +73,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     uint256 public rewardRatio;
     uint256 public apyRatio; // 0.01%
     bool public outEnable; // game end open harvest
+    bool public stakeEnable; // game stake enable
 
     mapping (address => bool) private _accountCheck;
     address[] private _accountList;
@@ -96,10 +97,11 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
           rewardRatio = 30; // 30% to pool reward
           multiple = 20;
           multipleCategoryId = 6;
-          apyRatio = 2;
+          apyRatio = 3;
           intervalBlock = 120;
 
           outEnable = false;
+          stakeEnable = true;
 
           _erc1820.setInterfaceImplementer(address(this), TOKENS_RECIPIENT_INTERFACE_HASH, address(this));
 
@@ -182,10 +184,12 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     }
 
     function setRewardRatio(uint256 _rewardRatio) external onlyOwner {
+        _poolLogic();
         rewardRatio = _rewardRatio;
     }
 
     function setApyRatio(uint256 _apyRatio) external onlyOwner {
+        _poolLogic();
         apyRatio = _apyRatio;
     }
 
@@ -262,6 +266,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     function _stake(address _from, uint256[] memory _ids, uint256[] memory _amounts) internal {
         require(_ids.length == _amounts.length, "ConfiSale: INVALID_ARRAYS_LENGTH");
         require(totalPoolAmount > 0, "ConfiSale: on start");
+        require(stakeEnable, "ConfiSale: stake no start");
         uint256 range = _ids.length;
         UserInfo storage user = userInfo[_from];
         _poolLogic();
@@ -278,9 +283,9 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
             if(!confiStls[_ids[i]]){
               revert("ConfiSale: no sale confi");
             }
-            uint256 _catId = 1;
-            if(confiCategories[_ids[i]] > 0){
-                _catId = confiCategories[_ids[i]];
+            uint256 _catId = confiCategories[_ids[i]];
+            if(_catId == 0){
+               revert("ConfiSale: no cat setting");
             }
 
             uint256 _weight = _getMultiple(_catId);
@@ -495,6 +500,10 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
 
     function setOutEnable(bool _outEnable) external onlyOwner {
        outEnable = _outEnable;
+    }
+
+    function setStakeEnable(bool _stakeEnable) external onlyOwner {
+       stakeEnable = _stakeEnable;
     }
 
     //---------------- Data Migration ----------------------
