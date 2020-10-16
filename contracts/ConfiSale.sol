@@ -248,12 +248,13 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
         emit TokenUnStake(address(this), msg.sender, _id);
     }
 
-    function uploadConfiCategory(uint256[] calldata _ids) external {
+    function uploadConfiCategory(uint256[] calldata _ids) external onlyOwner {
 
       uint256 range = _ids.length;
       for(uint256 i = 0; i < range; i ++){
         uint256 _catId = _getCatId(_ids[i]);
         confiCategories[_ids[i]] = _catId;
+        confiStls[_ids[i]] = true;
       }
     }
 
