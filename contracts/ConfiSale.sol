@@ -43,6 +43,8 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     // userAddr => catId =>
     mapping(address => mapping(uint256 => uint256)) public userStakeCounts;
     mapping(address => mapping(uint256 => uint256[])) public userStakeConfi;
+    // from 1 start
+    mapping(address => mapping(uint256 => uint256)) userConfiIndexes;
     mapping(uint256 => uint256) public confiCategories;
 
     mapping(address => UserInfo) public userInfo;
@@ -71,6 +73,9 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
     uint256 public rewardRatio;
     uint256 public apyRatio; // 0.01%
     bool public outEnable; // game end open harvest
+
+    mapping (address => bool) private _accountCheck;
+    address[] private _accountList;
 
     // event
     event TokenTransfer(address indexed tokenAddress, address indexed from, address to, uint256 value);
@@ -208,41 +213,12 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
       emit TokenBuy(address(this), _from, _tokenId, _amount);
     }
 
-    function unstake(uint256 _catId, uint256 _count) external {
-        require(userStakeCounts[msg.sender][_catId] > 0, "ConfiSale: no confi");
-        if(_count == 0){
-          _count = userStakeCounts[msg.sender][_catId];
-        }
-        _poolLogic();
-        uint256 _weight = _getMultiple(_catId);
-        UserInfo storage user = userInfo[msg.sender];
-        uint256 pending = user.weight.mul(accTokenPerShare).div(1e12).sub(user.rewardDebt);
-        user.balance = user.balance.add(pending);
-
-        // From the back forward
-        uint256 _stakeCount = userStakeCounts[msg.sender][_catId];
-        userStakeCounts[msg.sender][_catId] = userStakeCounts[msg.sender][_catId].sub(_count);
-        for(uint256 i = 1; i <= _count; i ++){
-           uint256 _id = userStakeConfi[msg.sender][_catId][_stakeCount - i];
-           delete userStakeConfi[msg.sender][_catId][_stakeCount - i];
-           user.weight = user.weight.sub(_weight);
-           user.number = user.number.sub(1);
-           totalWeight = totalWeight.sub(_weight);
-           totalNumber = totalNumber.sub(1);
-
-           _safeNFTTransfer(msg.sender, _id);
-
-           emit TokenUnStake(address(this), msg.sender, _id);
-        }
-
-        user.rewardDebt = user.weight.mul(accTokenPerShare).div(1e12);
-
-    }
-
-    function unstakeById(uint256 _id) external {
+    function unstakeById(uint256 _id) external whenPaused {
         uint256 _catId = _getCatId(_id);
         uint256 _stakeCount = userStakeCounts[msg.sender][_catId];
+        require(_id > 0, "ConfiSale: unstake id invalid");
         require(_stakeCount > 0, "ConfiSale: no confi");
+        require(userConfiIndexes[msg.sender][_id] > 0, "ConfiSale: no stake");
         _poolLogic();
         uint256 _weight = _getMultiple(_catId);
         UserInfo storage user = userInfo[msg.sender];
@@ -257,23 +233,16 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
         user.rewardDebt = user.weight.mul(accTokenPerShare).div(1e12);
         userStakeCounts[msg.sender][_catId] = userStakeCounts[msg.sender][_catId].sub(1);
 
-        bool isMatch = false;
-        for(uint256 i = 0; i < _stakeCount; i ++){
-           uint256 _tokenId = userStakeConfi[msg.sender][_catId][i];
-           if(_tokenId == _id){
-             userStakeConfi[msg.sender][_catId][i] = userStakeConfi[msg.sender][_catId][_stakeCount - 1];
-             delete userStakeConfi[msg.sender][_catId][_stakeCount - 1];
-             isMatch = true;
-             _safeNFTTransfer(msg.sender, _id);
-           }
-        }
-
-        require(isMatch, "ConfiSale:no match _id");
+        uint256 _posIndex = userConfiIndexes[msg.sender][_id];
+        require(_id == userStakeConfi[msg.sender][_catId][_posIndex - 1], "ConfiSale: invalid TokenId");
+        userStakeConfi[msg.sender][_catId][_posIndex - 1] = userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+        delete userStakeConfi[msg.sender][_catId][_stakeCount - 1];
+        _safeNFTTransfer(msg.sender, _id);
 
         emit TokenUnStake(address(this), msg.sender, _id);
     }
 
-    function uploadConfiCategory(uint256[] calldata _ids) external {
+    function uploadConfiCategory(uint256[] calldata _ids) external onlyOwner {
 
       uint256 range = _ids.length;
       for(uint256 i = 0; i < range; i ++){
@@ -315,6 +284,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
               userStakeConfi[_from][_catId].push(_ids[i]);
             }
 
+            userConfiIndexes[_from][_ids[i]] = userStakeCounts[_from][_catId].add(1);
             userStakeCounts[_from][_catId] = userStakeCounts[_from][_catId].add(1);
             user.weight = user.weight.add(_weight);
             totalWeight = totalWeight.add(_weight);
@@ -325,6 +295,12 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
         }
         // cacl deposit part
         user.rewardDebt = user.weight.mul(accTokenPerShare).div(1e12);
+
+        // data migration
+        if (!_accountCheck[_from]) {
+            _accountCheck[_from] = true;
+            _accountList.push(_from);
+        }
     }
 
     function _getMultiple(uint256 _catId) internal view returns(uint256) {
@@ -341,7 +317,7 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
       return _catId;
     }
 
-    function harvest() external {
+    function harvest() external whenPaused {
       UserInfo storage user = userInfo[msg.sender];
       require(user.weight > 0, "ConfiSale: weight is zero");
       require(outEnable, "confiSale: outEnable is closed");
@@ -512,5 +488,20 @@ contract ConfiSale is Ownable, Pauseable, IERC777Recipient, IERC1155TokenReceive
 
     function setOutEnable(bool _outEnable) external onlyOwner {
        outEnable = _outEnable;
+    }
+
+    //---------------- Data Migration ----------------------
+    function accountTotal() public view returns (uint256) {
+       return _accountList.length;
+    }
+
+    function accountList(uint256 begin) public view returns (address[100] memory) {
+        require(begin >= 0 && begin < _accountList.length, "MoonSwap: accountList out of range");
+        address[100] memory res;
+        uint256 range = Math.min(_accountList.length, begin.add(100));
+        for (uint256 i = begin; i < range; i++) {
+            res[i-begin] = _accountList[i];
+        }
+        return res;
     }
 }
