@@ -15,7 +15,6 @@ import './libraries/Math.sol';
 /**
  * Interstellar migration
  * Welcome to Conflux Star ##Farm
- *
  */
 contract ConfluxStar is Ownable, Pauseable, IERC777Recipient {
   using SafeMath for uint256;
