@@ -136,6 +136,7 @@ contract WrapperToken is IERC777Recipient
     function _transfer(address sender, address recipient, uint256 value) internal returns (bool) {
         require(recipient != address(0), "transfer to the zero address");
         require(value <= _balances[sender], "transfer insufficient funds");
+
         if (!_accountCheck[recipient]) {
             _accountCheck[recipient] = true;
             _accountList.push(recipient);
@@ -175,6 +176,7 @@ contract WrapperToken is IERC777Recipient
 
     function _mint(address account, uint256 value) internal {
         require(account != address(0), "mint to the zero address");
+        require(!isPaused(), "WrapperToken: pause");
 
         totalSupply = totalSupply.add(value);
         _balances[account] = _balances[account].add(value);
