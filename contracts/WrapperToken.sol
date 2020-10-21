@@ -76,6 +76,11 @@ contract WrapperToken is IERC777Recipient
         decimals = IERC20(_cToken).decimals();
     }
 
+    function modifySymbol(string calldata _symbol) external {
+      require(msg.sender == factory, 'Wrapper: FORBIDDEN'); // sufficient check
+      symbol = _symbol;
+    }
+
     function balanceOf(address account) public view returns (uint256) {
         return _balances[account];
     }

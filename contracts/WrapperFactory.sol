@@ -63,4 +63,11 @@ contract WrapperFactory is Pauseable {
 
        operator = _operator;
     }
+
+    function modifySymbol(address _cToken, string calldata _symbol) external {
+      require(msg.sender == operator, "Wrapper: operator is incorrect");
+      address _mToken = tokens[_cToken];
+      require(_mToken != address(0), "Wrapper: address incorrect");
+      WrapperToken(_mToken).modifySymbol(_symbol);
+    }
 }
