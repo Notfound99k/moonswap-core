@@ -23,3 +23,16 @@ limit tokenlist;
 - MoonSwap Pair (= UniswapV2Pair)
 
 same as Uniswap;
+
+
+## Contract Address
+
+base on conflux
+
+| Name | Contract Address (hex) |
+| --- | --- |
+| MoonswapRouter | 0x80ae6a88ce3351e9f729e8199f2871ba786ad7c5 |
+| MoonswapFactory | 0x865f55a399bf9250ae781adfbed71e70c12bd2d8 |
+| inithash | a6330451e4d6d3fc19f31fc5ee71147d88812b0da79f64b03ed210fd594d84e9|
+| MoonCake | 0x86897fff70592e3973f637b39da4208797192a1a |
+| MoonMaker | 0x854b73aa9f5b713c2244560c13107f19422f1e49 |

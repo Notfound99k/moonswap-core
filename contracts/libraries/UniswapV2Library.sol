@@ -34,13 +34,13 @@ library UniswapV2Library {
     // calculates the CREATE2 address for a pair without making any external calls
     function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
-        // origin  96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f
+        // origin  240e7516835c234cac28c2b142bb7f0ad41e470ac0abd1c9247ba70925b296e0
         // new 240e7516835c234cac28c2b142bb7f0ad41e470ac0abd1c9247ba70925b296e0
         pair = address(uint(keccak256(abi.encodePacked(
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'240e7516835c234cac28c2b142bb7f0ad41e470ac0abd1c9247ba70925b296e0' // init code hash
+                hex'a6330451e4d6d3fc19f31fc5ee71147d88812b0da79f64b03ed210fd594d84e9' // init code hash
             ))));
         // Conflux Contract Address 0x8xxxx
         pair = wrapperAddress(pair);
