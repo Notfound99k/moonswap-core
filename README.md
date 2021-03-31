@@ -27,6 +27,7 @@ same as Uniswap;
 
 ## Contract Address
 
+- `mainnet`
 base on conflux
 
 | Name | Contract Address (hex) |
@@ -36,3 +37,10 @@ base on conflux
 | inithash | a6330451e4d6d3fc19f31fc5ee71147d88812b0da79f64b03ed210fd594d84e9|
 | MoonCake | 0x86897fff70592e3973f637b39da4208797192a1a |
 | MoonMaker | 0x854b73aa9f5b713c2244560c13107f19422f1e49 |
+
+- `testnet`
+
+| Name | Contract Address (hex) |
+| --- | --- |
+| MoonswapRouter | 0x8a38553900e5d1f83a76c83b09522929691112d0 |
+| MoonswapFactory | 0x8c1bf1bce2e9c0a5822fd106b0aac39bf02be779 |
