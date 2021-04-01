@@ -1,4 +1,4 @@
-## Farm Gig Protocal v2
+## Farm Gig Protocal V2
 
 By staking mLpToken in the Farm pool, while obtaining cMoon, you can also mine a variety of tokens sponsored by the project party.
 
