@@ -56,5 +56,5 @@ function harvestBatch(uint256 _pid) public
 The user can retrieve the MLPToken at any time
 
 ```
-function withdraw(uint256 _pid, uint256 _amount) public {
+function withdraw(uint256 _pid, uint256 _amount) public
 ```
