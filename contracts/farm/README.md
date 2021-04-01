@@ -1,7 +1,6 @@
-## Multi Reward Token Protocal
+## Farm Gig Protocal v2
 
-stake LpToken, Dig cMoon, and It can mine tokens sponsored by the project party.
-
+By staking mLpToken in the Farm pool, while obtaining cMoon, you can also mine a variety of tokens sponsored by the project party.
 
 ### Admin Create Pool
 
