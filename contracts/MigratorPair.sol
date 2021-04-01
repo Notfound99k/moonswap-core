@@ -72,7 +72,7 @@ contract MigratorPair is IERC777Recipient {
       // register all users as sponsees
       address[] memory users = new address[](1);
       users[0] = address(0);
-      SPONSOR.add_privilege(users);
+      SPONSOR.addPrivilege(users);
   }
 
   modifier whenPaused() {

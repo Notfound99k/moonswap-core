@@ -80,7 +80,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         // register all users as sponsees
         address[] memory users = new address[](1);
         users[0] = address(0);
-        SPONSOR.add_privilege(users);
+        SPONSOR.addPrivilege(users);
     }
 
     // called once by the factory at time of deployment

@@ -1,0 +1,289 @@
+{
+  "contractName": "IFansToken",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/IFansToken.sol\":\"IFansToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/IFansToken.sol\":{\"keccak256\":\"0xb2ec7c568a6f40936bd7964e1623815f108f1665985ca67183ff795e2cc944c9\",\"urls\":[\"bzz-raw://33c1e87515d713a16f88f9b7dff0c122f7b3978e2651bf01e86796dc2100f8f1\",\"dweb:/ipfs/QmaEH3aiZtEHEoUCeudZ6dhhQjdim8LbENPvvYwdLvr4cK\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity =0.5.16;\n\ninterface IFansToken {\n   function mint(address _to, uint256 _amount) external;\n}\n",
+  "sourcePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/IFansToken.sol",
+  "ast": {
+    "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/IFansToken.sol",
+    "exportedSymbols": {
+      "IFansToken": [
+        19903
+      ]
+    },
+    "id": 19904,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19895,
+        "literals": [
+          "solidity",
+          "=",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:41"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 19903,
+        "linearizedBaseContracts": [
+          19903
+        ],
+        "name": "IFansToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19902,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mint",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 19900,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19897,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19902,
+                  "src": "66:11:41",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 19896,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "66:7:41",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 19899,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19902,
+                  "src": "79:15:41",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 19898,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "79:7:41",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "65:30:41"
+            },
+            "returnParameters": {
+              "id": 19901,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "104:0:41"
+            },
+            "scope": 19903,
+            "src": "52:53:41",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 19904,
+        "src": "26:81:41"
+      }
+    ],
+    "src": "0:108:41"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/IFansToken.sol",
+    "exportedSymbols": {
+      "IFansToken": [
+        19903
+      ]
+    },
+    "id": 19904,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19895,
+        "literals": [
+          "solidity",
+          "=",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:41"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 19903,
+        "linearizedBaseContracts": [
+          19903
+        ],
+        "name": "IFansToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19902,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mint",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 19900,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19897,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19902,
+                  "src": "66:11:41",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 19896,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "66:7:41",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 19899,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19902,
+                  "src": "79:15:41",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 19898,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "79:7:41",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "65:30:41"
+            },
+            "returnParameters": {
+              "id": 19901,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "104:0:41"
+            },
+            "scope": 19903,
+            "src": "52:53:41",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 19904,
+        "src": "26:81:41"
+      }
+    ],
+    "src": "0:108:41"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2021-04-01T09:42:49.486Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

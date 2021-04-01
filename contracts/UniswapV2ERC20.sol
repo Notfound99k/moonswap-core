@@ -45,7 +45,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         // register all users as sponsees
         address[] memory users = new address[](1);
         users[0] = address(0);
-        SPONSOR.add_privilege(users);
+        SPONSOR.addPrivilege(users);
     }
 
     function _mint(address to, uint value) internal {

@@ -35,7 +35,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         // register all users as sponsees
         address[] memory users = new address[](1);
         users[0] = address(0);
-        SPONSOR.add_privilege(users);
+        SPONSOR.addPrivilege(users);
     }
 
     // **** ADD LIQUIDITY ****

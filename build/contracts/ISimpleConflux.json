@@ -1,0 +1,566 @@
+{
+  "contractName": "ISimpleConflux",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "poolInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "allocPoint",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastRewardBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "accTokenPerShare",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ISimpleConflux.PoolInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_pid\",\"type\":\"uint256\"}],\"name\":\"poolInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"allocPoint\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastRewardBlock\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"accTokenPerShare\",\"type\":\"uint256\"}],\"internalType\":\"struct ISimpleConflux.PoolInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/ISimpleConflux.sol\":\"ISimpleConflux\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/ISimpleConflux.sol\":{\"keccak256\":\"0x05999198f280f30d330641a8b88c20d7b47cffd2b3dc7fecd564146a5fc677d7\",\"urls\":[\"bzz-raw://c8aa0640aca968f1e1096fe3782b714192d1172fa8667c9cc8df7ce747b8e4ed\",\"dweb:/ipfs/QmVugm5MypDzkKzfDJfHaW9wCZ1oiF44VGy9dXE2w27NJg\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity =0.5.16;\npragma experimental ABIEncoderV2;\n\ninterface ISimpleConflux {\n\n  struct PoolInfo {\n    address token;\n    uint256 allocPoint;\n    uint256 lastRewardBlock;\n    uint256 accTokenPerShare;\n  }\n\n  function poolInfo(uint256 _pid) external view returns(PoolInfo memory);\n}\n",
+  "sourcePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/ISimpleConflux.sol",
+  "ast": {
+    "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/ISimpleConflux.sol",
+    "exportedSymbols": {
+      "ISimpleConflux": [
+        19951
+      ]
+    },
+    "id": 19952,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19933,
+        "literals": [
+          "solidity",
+          "=",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:43"
+      },
+      {
+        "id": 19934,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "25:33:43"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 19951,
+        "linearizedBaseContracts": [
+          19951
+        ],
+        "name": "ISimpleConflux",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "ISimpleConflux.PoolInfo",
+            "id": 19943,
+            "members": [
+              {
+                "constant": false,
+                "id": 19936,
+                "name": "token",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "112:13:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 19935,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "112:7:43",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19938,
+                "name": "allocPoint",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "131:18:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19937,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "131:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19940,
+                "name": "lastRewardBlock",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "155:23:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19939,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "155:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19942,
+                "name": "accTokenPerShare",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "184:24:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19941,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "184:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PoolInfo",
+            "nodeType": "StructDefinition",
+            "scope": 19951,
+            "src": "90:123:43",
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19950,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "poolInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 19946,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19945,
+                  "name": "_pid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19950,
+                  "src": "235:12:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 19944,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "235:7:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "234:14:43"
+            },
+            "returnParameters": {
+              "id": 19949,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19948,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19950,
+                  "src": "271:15:43",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PoolInfo_$19943_memory_ptr",
+                    "typeString": "struct ISimpleConflux.PoolInfo"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 19947,
+                    "name": "PoolInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 19943,
+                    "src": "271:8:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PoolInfo_$19943_storage_ptr",
+                      "typeString": "struct ISimpleConflux.PoolInfo"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "270:17:43"
+            },
+            "scope": 19951,
+            "src": "217:71:43",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 19952,
+        "src": "60:230:43"
+      }
+    ],
+    "src": "0:291:43"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/junhuazhou/Documents/GitHub/moonswap-core/contracts/interfaces/ISimpleConflux.sol",
+    "exportedSymbols": {
+      "ISimpleConflux": [
+        19951
+      ]
+    },
+    "id": 19952,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19933,
+        "literals": [
+          "solidity",
+          "=",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:43"
+      },
+      {
+        "id": 19934,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "25:33:43"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 19951,
+        "linearizedBaseContracts": [
+          19951
+        ],
+        "name": "ISimpleConflux",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "ISimpleConflux.PoolInfo",
+            "id": 19943,
+            "members": [
+              {
+                "constant": false,
+                "id": 19936,
+                "name": "token",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "112:13:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 19935,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "112:7:43",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19938,
+                "name": "allocPoint",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "131:18:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19937,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "131:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19940,
+                "name": "lastRewardBlock",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "155:23:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19939,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "155:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19942,
+                "name": "accTokenPerShare",
+                "nodeType": "VariableDeclaration",
+                "scope": 19943,
+                "src": "184:24:43",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19941,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "184:7:43",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PoolInfo",
+            "nodeType": "StructDefinition",
+            "scope": 19951,
+            "src": "90:123:43",
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19950,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "poolInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 19946,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19945,
+                  "name": "_pid",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19950,
+                  "src": "235:12:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 19944,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "235:7:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "234:14:43"
+            },
+            "returnParameters": {
+              "id": 19949,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19948,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19950,
+                  "src": "271:15:43",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PoolInfo_$19943_memory_ptr",
+                    "typeString": "struct ISimpleConflux.PoolInfo"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 19947,
+                    "name": "PoolInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 19943,
+                    "src": "271:8:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_PoolInfo_$19943_storage_ptr",
+                      "typeString": "struct ISimpleConflux.PoolInfo"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "270:17:43"
+            },
+            "scope": 19951,
+            "src": "217:71:43",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 19952,
+        "src": "60:230:43"
+      }
+    ],
+    "src": "0:291:43"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2021-04-01T09:42:49.487Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
