@@ -187,12 +187,6 @@ contract SavingPool is Ownable, ISimpleConflux{
         return IConfluxStar(confluxStar).totalAllocPoint();
     }
 
-    // emergency Failure LP
-    function emergencyWithdraw(address token, address to, uint256 _amount) external onlyOwner {
-        require(to != address(0), "SavingPool: to address is zero");
-        IERC20(token).safeTransfer(to, _amount);
-    }
-
     function _getSceneReward(uint256 _lastRewardBlock, uint256 _sceneAllocPoint) internal view returns(uint256) {
         uint256 _tokenPerSecond = IConfluxStar(confluxStar).tokenPerSecond();
         uint256 _totalAllocPoint = IConfluxStar(confluxStar).totalAllocPoint();
